@@ -1,46 +1,47 @@
-    /*
-     * Digital_Light_Sensor.ino
-     * A library for TSL2561
-     *
-     * Copyright (c) 2012 seeed technology inc.
-     * Website    : www.seeed.cc
-     * Author     : zhangkun
-     * Create Time:
-     * Change Log :
-     *
-     * The MIT License (MIT)
-     *
-     * Permission is hereby granted, free of charge, to any person obtaining a copy
-     * of this software and associated documentation files (the "Software"), to deal
-     * in the Software without restriction, including without limitation the rights
-     * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-     * copies of the Software, and to permit persons to whom the Software is
-     * furnished to do so, subject to the following conditions:
-     *
-     * The above copyright notice and this permission notice shall be included in
-     * all copies or substantial portions of the Software.
-     *
-     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-     * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-     * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-     * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-     * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-     * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-     * THE SOFTWARE.
-     */
+//Turns on and off a light emitting diode(LED) connected to digital pin 13, when pressing a pushbutton attached to pin 2.
 
-    #include <Wire.h>
-    #include <Digital_Light_TSL2561.h>
-    void setup()
-    {
-      Wire.begin();
-      Serial.begin(9600);
-      TSL2561.init();
-    }
+/*
+ The circuit:
+ * LED attached from pin 13 to ground
+ * pushbutton attached to pin 2 from +5V
+ * 10K resistor attached to pin 2 from ground
 
-    void loop()
-    {
-      Serial.print("The Light value is: ");
-      Serial.println(TSL2561.readVisibleLux());
-      delay(1000);
+ * Note: on most Arduinos there is already an LED on the board
+ attached to pin 13.
+
+
+ This example code is in the public domain.
+
+ http://www.arduino.cc/en/Tutorial/Button
+ */
+
+// constants won't change. They're used here to
+// set pin numbers:
+const int buttonPin = 2;     // the number of the pushbutton pin
+const int ledPin =  13;      // the number of the LED pin
+
+// variables will change:
+int buttonState = 0;         // variable for reading the pushbutton status
+
+void setup() {
+    // initialize the LED pin as an output:
+    pinMode(ledPin, OUTPUT);
+    // initialize the pushbutton pin as an input:
+    pinMode(buttonPin, INPUT);
+}
+
+void loop(){
+    // read the state of the pushbutton value:
+    buttonState = digitalRead(buttonPin);
+
+    // check if the pushbutton is pressed.
+    // if it is, the buttonState is HIGH:
+    if (buttonState == HIGH) {
+        // turn LED on:
+        digitalWrite(ledPin, HIGH);
     }
+    else {
+        // turn LED off:
+        digitalWrite(ledPin, LOW);
+    }
+}
