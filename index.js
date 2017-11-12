@@ -52,7 +52,7 @@ function sendResult() {
     }
 
     http.get(gameResultUrl + '?gameID=' + gameId + '&result=' + contents, function (res) {
-      const { statusCode } = res;
+      var statusCode = res.statusCode;
       const contentType = res.headers['content-type'];
     
       let error;
