@@ -19,11 +19,11 @@ var document = firestore.doc('games/' + gameId);
 console.log('Got reference to Chicken Co-Op game with ID ' + gameId);
   
 // Listen for changes in the specified game
-var observer = document.onSnapshot(docSnapshot => {
+var observer = document.onSnapshot(function (docSnapshot) {
   console.log('Game with ID ' + gameId + ' updated');
   var data = docSnapshot._fieldsProto;
   runGame(data);
-}, err => {
+}, function (err) {
   console.error('Error observing document: ' + err);
 });
 
@@ -46,22 +46,22 @@ function runGame(coOpInfo) {
 
 // Each microgame's shell script writes the result as a number to shell.txt
 function sendResult() {
-  fs.readFile('shell.txt', 'utf8', (err, contents) => {
+  fs.readFile('shell.txt', 'utf8', function (err, contents) {
     if (err) {
       console.error('Error reading game result: ' + err);
     }
 
-    http.get(`${gameResultUrl}?gameID=${gameId}&result=${contents}`, (res) => {
+    http.get(gameResultUrl + '?gameID=' + gameId + '&result=' + contents, function (res) {
       const { statusCode } = res;
       const contentType = res.headers['content-type'];
     
       let error;
       if (statusCode !== 200) {
         error = new Error('Request Failed.\n' +
-                          `Status Code: ${statusCode}`);
+                          'Status Code: ' + statusCode);
       } else if (!/^application\/json/.test(contentType)) {
         error = new Error('Invalid content-type.\n' +
-                          `Expected application/json but received ${contentType}`);
+                          'Expected application/json but received ' + contentType);
       }
       if (error) {
         console.error(error.message);
@@ -72,8 +72,8 @@ function sendResult() {
     
       res.setEncoding('utf8');
       let rawData = '';
-      res.on('data', (chunk) => { rawData += chunk; });
-      res.on('end', () => {
+      res.on('data', function (chunk) { rawData += chunk; });
+      res.on('end', function () {
         try {
           const parsedData = JSON.parse(rawData);
           console.log(parsedData);
@@ -81,7 +81,7 @@ function sendResult() {
           console.error(e.message);
         }
       });
-    }).on('error', (err) => {
+    }).on('error', function (err) {
       console.error('Error sending game result: ' + err);
     });
   });
