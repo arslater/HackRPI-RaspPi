@@ -1,0 +1,24 @@
+{
+  "name": "chicken-pi",
+  "version": "1.0.0",
+  "description": "Help Chicken Co-Op talk to Firebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arslater/HackRPI-RaspPi.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arslater/HackRPI-RaspPi/issues"
+  },
+  "homepage": "https://github.com/arslater/HackRPI-RaspPi#readme",
+  "dependencies": {
+    "@google-cloud/firestore": "^0.9.0",
+    "firebase": "^4.6.2",
+    "node-run-cmd": "^1.0.1"
+  }
+}
