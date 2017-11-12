@@ -55,7 +55,7 @@ function sendResult() {
       var statusCode = res.statusCode;
       const contentType = res.headers['content-type'];
     
-      let error;
+      var error;
       if (statusCode !== 200) {
         error = new Error('Request Failed.\n' +
                           'Status Code: ' + statusCode);
@@ -71,7 +71,7 @@ function sendResult() {
       }
     
       res.setEncoding('utf8');
-      let rawData = '';
+      var rawData = '';
       res.on('data', function (chunk) { rawData += chunk; });
       res.on('end', function () {
         try {
