@@ -8,15 +8,16 @@ var config = {
 // Get a reference to the database service
 var firestore = new Firestore(config);
 
-// Listen for game-start events
+// Find the specified game within storage
 var gameId = process.argv[2];
 var document = firestore.doc('games/' + gameId);
 
-console.log('Got reference to Chicken Co-Op game with ID ' + gameId + ': ' + document);
-
-// Read data once without listening for changes
-document.get()
-  .then(doc => {
-    var data = doc._fieldsProto;
-    console.log('Successfully read document: ' + JSON.stringify(data, null, 4));
-  });
+console.log('Got reference to Chicken Co-Op game with ID ' + gameId);
+  
+// Listen for changes in the specified game
+var observer = document.onSnapshot(docSnapshot => {
+  var data = docSnapshot._fieldsProto;
+  console.log('Game with ID ' + gameId + ' updated');
+}, err => {
+  console.log('Error observing document: ' + err);
+});
